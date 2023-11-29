@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'lists/new'
+  get 'lists/new' => 'lists#new', as: 'new_list'
   post 'lists' => 'lists#create'
   get 'lists' => 'lists#index'
   # .../lists/1や.../lists/2 .../lists/3に該当する

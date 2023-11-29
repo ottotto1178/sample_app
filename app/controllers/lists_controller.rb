@@ -4,12 +4,17 @@ class ListsController < ApplicationController
   end
 
   def create
-    # 1,2 データを受け取り新規登録するためのインスタンス作成
-    list = List.new(list_params)
-    # 3 データをDBに保存するためのsaveメソッドを実行
-    list.save
-    # 4 トップ画面へリダイレクト
-    redirect_to list_path(list.id)
+    @list = List.new(list_params)
+    if @list.save
+      flash[:notice] = "投稿に成功しました。"
+      redirect_to list_path(@list.id)
+    else
+      flash.now[:alert] = "投稿に失敗しました。"
+      # rails 6.Xでは以下のものを使う
+      # render :new
+      # rails 7.Xでは以下のものを使う
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def index
